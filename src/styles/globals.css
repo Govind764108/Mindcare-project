@@ -1,0 +1,651 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500&display=swap');
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --font-size: 16px;
+  --background: #ffffff;
+  --foreground: #2d3748;
+  --card: #ffffff;
+  --card-foreground: #2d3748;
+  --popover: #ffffff;
+  --popover-foreground: #2d3748;
+  --primary: #6C63FF;
+  --primary-foreground: #ffffff;
+  --secondary: #A7D8FF;
+  --secondary-foreground: #2d3748;
+  --muted: #f7fafc;
+  --muted-foreground: #718096;
+  --accent: #E8F5E8;
+  --accent-foreground: #2d3748;
+  --destructive: #e53e3e;
+  --destructive-foreground: #ffffff;
+  --border: rgba(0, 0, 0, 0.1);
+  --input: transparent;
+  --input-background: #f7fafc;
+  --switch-background: #cbd5e0;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --ring: #6C63FF;
+  --chart-1: #6C63FF;
+  --chart-2: #00BFA6;
+  --chart-3: #A7D8FF;
+  --chart-4: #E8F5E8;
+  --chart-5: #FFE4E1;
+  --radius: 1rem;
+  --sidebar: #f7fafc;
+  --sidebar-foreground: #2d3748;
+  --sidebar-primary: #6C63FF;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #E8F5E8;
+  --sidebar-accent-foreground: #2d3748;
+  --sidebar-border: #e2e8f0;
+  --sidebar-ring: #6C63FF;
+  
+  /* Custom theme colors - These remain unchanged in dark mode */
+  --theme-primary: #6C63FF;
+  --theme-secondary: #00BFA6;
+  --theme-tertiary: #A7D8FF;
+  --theme-accent: #E8F5E8;
+  
+  /* Light mode colors - Enhanced contrast ratios (4.5:1+) */
+  --theme-bg-light: #ffffff;
+  --theme-bg-gradient-light: linear-gradient(135deg, #f8fafc 0%, #e8f4f8 50%, #f1f0ff 100%);
+  --theme-text-primary-light: #1a202c;
+  --theme-text-secondary-light: #4a5568;
+  --theme-border-light: rgba(0, 0, 0, 0.12);
+  --theme-card-bg-light: rgba(255, 255, 255, 0.85);
+  --theme-hover-light: rgba(0, 0, 0, 0.06);
+  
+  /* Dark mode colors - Enhanced contrast ratios (4.5:1+) */
+  --theme-bg-dark: #0f172a;
+  --theme-bg-gradient-dark: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0c1629 100%);
+  --theme-text-primary-dark: #f1f5f9;
+  --theme-text-secondary-dark: #cbd5e1;
+  --theme-border-dark: rgba(255, 255, 255, 0.18);
+  --theme-card-bg-dark: rgba(30, 41, 59, 0.9);
+  --theme-hover-dark: rgba(255, 255, 255, 0.12);
+  
+  /* Default to light mode */
+  --theme-bg: var(--theme-bg-light);
+  --theme-bg-gradient: var(--theme-bg-gradient-light);
+  --theme-text-primary: var(--theme-text-primary-light);
+  --theme-text-secondary: var(--theme-text-secondary-light);
+  --theme-border: var(--theme-border-light);
+  --theme-card-bg: var(--theme-card-bg-light);
+  --theme-hover: var(--theme-hover-light);
+  
+  /* Solid colors for better visibility - enhanced contrast */
+  --gradient-primary: var(--theme-primary);
+  --gradient-secondary: var(--theme-secondary);
+  --gradient-tertiary: var(--theme-tertiary);
+  --gradient-quaternary: var(--theme-accent);
+  
+  /* Icon colors for better visibility - enhanced contrast */
+  --icon-primary: var(--theme-primary);
+  --icon-secondary: var(--theme-secondary);
+  --icon-tertiary: var(--theme-tertiary);
+  --icon-quaternary: #7C3AED;
+  
+  /* Enhanced text colors for better readability */
+  --text-emphasis: var(--theme-text-primary);
+  --text-muted: var(--theme-text-secondary);
+  
+  /* High contrast icon colors for dark mode */
+  --icon-contrast-light: #ffffff;
+  --icon-contrast-dark: #0f0f0f;
+  --icon-contrast: var(--icon-contrast-light);
+  
+  /* Tab and navigation contrast colors */
+  --tab-bg-active: var(--theme-primary);
+  --tab-text-active: #ffffff;
+  --tab-bg-inactive: var(--theme-card-bg);
+  --tab-text-inactive: var(--theme-text-secondary);
+  
+  /* Card content contrast */
+  --card-text-primary: var(--theme-text-primary);
+  --card-text-secondary: var(--theme-text-secondary);
+  --card-bg-elevated: var(--theme-card-bg);
+  
+  /* Subtle gradients for backgrounds only */
+  --gradient-bg-primary: linear-gradient(135deg, color-mix(in srgb, var(--theme-primary) 15%, transparent), color-mix(in srgb, var(--theme-tertiary) 10%, transparent));
+  --gradient-bg-secondary: linear-gradient(135deg, color-mix(in srgb, var(--theme-secondary) 15%, transparent), color-mix(in srgb, var(--theme-tertiary) 10%, transparent));
+  --gradient-bg-tertiary: linear-gradient(135deg, color-mix(in srgb, var(--theme-tertiary) 15%, transparent), color-mix(in srgb, var(--theme-accent) 10%, transparent));
+  --gradient-bg-quaternary: linear-gradient(135deg, color-mix(in srgb, var(--theme-accent) 15%, transparent), color-mix(in srgb, var(--theme-secondary) 10%, transparent));
+}
+
+/* Theme: Default (Sunrise Pastels) */
+.theme-default {
+  --theme-primary: #5B52E8;
+  --theme-secondary: #00A693;
+  --theme-tertiary: #7AC3F0;
+  --theme-accent: #D4EBDA;
+  
+  /* Light mode colors - Enhanced contrast */
+  --theme-bg-light: #ffffff;
+  --theme-bg-gradient-light: linear-gradient(135deg, #f8fafc 0%, #e8f4f8 50%, #f1f0ff 100%);
+  --theme-text-primary-light: #1a202c;
+  --theme-text-secondary-light: #4a5568;
+  --theme-border-light: rgba(91, 82, 232, 0.12);
+  --theme-card-bg-light: rgba(255, 255, 255, 0.85);
+  --theme-hover-light: rgba(91, 82, 232, 0.08);
+  
+  /* Dark mode colors - Enhanced contrast */
+  --theme-bg-dark: #0a0a0f;
+  --theme-bg-gradient-dark: linear-gradient(135deg, #0a0a0f 0%, #151520 50%, #080808 100%);
+  --theme-text-primary-dark: #f1f5f9;
+  --theme-text-secondary-dark: #cbd5e1;
+  --theme-border-dark: rgba(91, 82, 232, 0.18);
+  --theme-card-bg-dark: rgba(21, 21, 32, 0.9);
+  --theme-hover-dark: rgba(91, 82, 232, 0.12);
+  
+  /* Default to light mode */
+  --theme-bg: var(--theme-bg-light);
+  --theme-bg-gradient: var(--theme-bg-gradient-light);
+  --theme-text-primary: var(--theme-text-primary-light);
+  --theme-text-secondary: var(--theme-text-secondary-light);
+  --theme-border: var(--theme-border-light);
+  --theme-card-bg: var(--theme-card-bg-light);
+  --theme-hover: var(--theme-hover-light);
+  
+  /* Update base colors for components */
+  --primary: #6C63FF;
+  --secondary: #A7D8FF;
+  --accent: #E8F5E8;
+  --gradient-primary: #6C63FF;
+  --gradient-secondary: #00BFA6;
+  --gradient-tertiary: #A7D8FF;
+  --gradient-quaternary: #E8F5E8;
+  
+  /* Enhanced icon colors for this theme */
+  --icon-primary: #5B52E8;
+  --icon-secondary: #00A693;
+  --icon-tertiary: #7AC3F0;
+  --icon-quaternary: #7C3AED;
+}
+
+/* Theme: Mint Mode (Fresh Calm) */
+.theme-mint {
+  --theme-primary: #4A9B7E;
+  --theme-secondary: #E6A85C;
+  --theme-tertiary: #5A9FD4;
+  --theme-accent: #D4EBDA;
+  
+  /* Light mode colors - Enhanced contrast */
+  --theme-bg-light: #FDFCFB;
+  --theme-bg-gradient-light: linear-gradient(135deg, #FDFCFB 0%, #F5F7F5 50%, #F0F8F5 100%);
+  --theme-text-primary-light: #1a202c;
+  --theme-text-secondary-light: #4a5568;
+  --theme-border-light: rgba(74, 155, 126, 0.15);
+  --theme-card-bg-light: rgba(253, 252, 251, 0.85);
+  --theme-hover-light: rgba(74, 155, 126, 0.08);
+  
+  /* Dark mode colors - Enhanced contrast */
+  --theme-bg-dark: #0a0f0c;
+  --theme-bg-gradient-dark: linear-gradient(135deg, #0a0f0c 0%, #151a15 50%, #080d08 100%);
+  --theme-text-primary-dark: #f1f5f9;
+  --theme-text-secondary-dark: #cbd5e1;
+  --theme-border-dark: rgba(74, 155, 126, 0.22);
+  --theme-card-bg-dark: rgba(21, 26, 21, 0.9);
+  --theme-hover-dark: rgba(74, 155, 126, 0.12);
+  
+  /* Default to light mode */
+  --theme-bg: var(--theme-bg-light);
+  --theme-bg-gradient: var(--theme-bg-gradient-light);
+  --theme-text-primary: var(--theme-text-primary-light);
+  --theme-text-secondary: var(--theme-text-secondary-light);
+  --theme-border: var(--theme-border-light);
+  --theme-card-bg: var(--theme-card-bg-light);
+  --theme-hover: var(--theme-hover-light);
+  
+  /* Update base colors for components */
+  --primary: #4A9B7E;
+  --secondary: #E6A85C;
+  --accent: #D4EBDA;
+  --gradient-primary: #4A9B7E;
+  --gradient-secondary: #E6A85C;
+  --gradient-tertiary: #5A9FD4;
+  --gradient-quaternary: #D4EBDA;
+  
+  /* Enhanced icon colors for this theme */
+  --icon-primary: #4A9B7E;
+  --icon-secondary: #E6A85C;
+  --icon-tertiary: #5A9FD4;
+  --icon-quaternary: #8B5CF6;
+}
+
+/* Theme: Ocean Mode (Serene Breeze) */
+.theme-ocean {
+  --theme-primary: #2563EB;
+  --theme-secondary: #0891B2;
+  --theme-tertiary: #F59E0B;
+  --theme-accent: #DBEAFE;
+  
+  /* Light mode colors - Enhanced contrast */
+  --theme-bg-light: #F5F9FF;
+  --theme-bg-gradient-light: linear-gradient(135deg, #F5F9FF 0%, #E8F4FD 50%, #E0F2F1 100%);
+  --theme-text-primary-light: #1a202c;
+  --theme-text-secondary-light: #4a5568;
+  --theme-border-light: rgba(37, 99, 235, 0.15);
+  --theme-card-bg-light: rgba(245, 249, 255, 0.85);
+  --theme-hover-light: rgba(37, 99, 235, 0.08);
+  
+  /* Dark mode colors - Enhanced contrast */
+  --theme-bg-dark: #0c1420;
+  --theme-bg-gradient-dark: linear-gradient(135deg, #0c1420 0%, #1e293b 50%, #0f1419 100%);
+  --theme-text-primary-dark: #f1f5f9;
+  --theme-text-secondary-dark: #cbd5e1;
+  --theme-border-dark: rgba(37, 99, 235, 0.22);
+  --theme-card-bg-dark: rgba(30, 41, 59, 0.9);
+  --theme-hover-dark: rgba(37, 99, 235, 0.12);
+  
+  /* Default to light mode */
+  --theme-bg: var(--theme-bg-light);
+  --theme-bg-gradient: var(--theme-bg-gradient-light);
+  --theme-text-primary: var(--theme-text-primary-light);
+  --theme-text-secondary: var(--theme-text-secondary-light);
+  --theme-border: var(--theme-border-light);
+  --theme-card-bg: var(--theme-card-bg-light);
+  --theme-hover: var(--theme-hover-light);
+  
+  /* Update base colors for components */
+  --primary: #2563EB;
+  --secondary: #0891B2;
+  --accent: #DBEAFE;
+  --gradient-primary: #2563EB;
+  --gradient-secondary: #0891B2;
+  --gradient-tertiary: #F59E0B;
+  --gradient-quaternary: #DBEAFE;
+  
+  /* Enhanced icon colors for this theme */
+  --icon-primary: #2563EB;
+  --icon-secondary: #0891B2;
+  --icon-tertiary: #F59E0B;
+  --icon-quaternary: #3B82F6;
+}
+
+/* Theme: Sakura Mode (Gentle & Supportive) */
+.theme-sakura {
+  --theme-primary: #DB2777;
+  --theme-secondary: #7C3AED;
+  --theme-tertiary: #0891B2;
+  --theme-accent: #FCE7F3;
+  
+  /* Light mode colors - Enhanced contrast */
+  --theme-bg-light: #FEF9FB;
+  --theme-bg-gradient-light: linear-gradient(135deg, #FEF9FB 0%, #FDF2F8 50%, #F3E8FF 100%);
+  --theme-text-primary-light: #1a202c;
+  --theme-text-secondary-light: #4a5568;
+  --theme-border-light: rgba(219, 39, 119, 0.15);
+  --theme-card-bg-light: rgba(254, 249, 251, 0.85);
+  --theme-hover-light: rgba(219, 39, 119, 0.08);
+  
+  /* Dark mode colors - Enhanced contrast */
+  --theme-bg-dark: #1a0a14;
+  --theme-bg-gradient-dark: linear-gradient(135deg, #1a0a14 0%, #2d1b23 50%, #150812 100%);
+  --theme-text-primary-dark: #f1f5f9;
+  --theme-text-secondary-dark: #cbd5e1;
+  --theme-border-dark: rgba(219, 39, 119, 0.22);
+  --theme-card-bg-dark: rgba(45, 27, 35, 0.9);
+  --theme-hover-dark: rgba(219, 39, 119, 0.12);
+  
+  /* Default to light mode */
+  --theme-bg: var(--theme-bg-light);
+  --theme-bg-gradient: var(--theme-bg-gradient-light);
+  --theme-text-primary: var(--theme-text-primary-light);
+  --theme-text-secondary: var(--theme-text-secondary-light);
+  --theme-border: var(--theme-border-light);
+  --theme-card-bg: var(--theme-card-bg-light);
+  --theme-hover: var(--theme-hover-light);
+  
+  /* Update base colors for components */
+  --primary: #DB2777;
+  --secondary: #7C3AED;
+  --accent: #FCE7F3;
+  --gradient-primary: #DB2777;
+  --gradient-secondary: #7C3AED;
+  --gradient-tertiary: #0891B2;
+  --gradient-quaternary: #FCE7F3;
+  
+  /* Enhanced icon colors for this theme */
+  --icon-primary: #DB2777;
+  --icon-secondary: #7C3AED;
+  --icon-tertiary: #0891B2;
+  --icon-quaternary: #EC4899;
+}
+
+/* Theme: Cloud & Stone (Professional Calm) */
+.theme-cloud {
+  --theme-primary: #475569;
+  --theme-secondary: #78716c;
+  --theme-tertiary: #EA580C;
+  --theme-accent: #F1F5F9;
+  
+  /* Light mode colors - Enhanced contrast */
+  --theme-bg-light: #FAFAFA;
+  --theme-bg-gradient-light: linear-gradient(135deg, #FAFAFA 0%, #F5F7FA 50%, #F0F2F5 100%);
+  --theme-text-primary-light: #1a202c;
+  --theme-text-secondary-light: #4a5568;
+  --theme-border-light: rgba(71, 85, 105, 0.15);
+  --theme-card-bg-light: rgba(250, 250, 250, 0.85);
+  --theme-hover-light: rgba(71, 85, 105, 0.08);
+  
+  /* Dark mode colors - Enhanced contrast */
+  --theme-bg-dark: #0f1419;
+  --theme-bg-gradient-dark: linear-gradient(135deg, #0f1419 0%, #1e2328 50%, #0c1015 100%);
+  --theme-text-primary-dark: #f1f5f9;
+  --theme-text-secondary-dark: #cbd5e1;
+  --theme-border-dark: rgba(71, 85, 105, 0.22);
+  --theme-card-bg-dark: rgba(30, 35, 40, 0.9);
+  --theme-hover-dark: rgba(71, 85, 105, 0.12);
+  
+  /* Default to light mode */
+  --theme-bg: var(--theme-bg-light);
+  --theme-bg-gradient: var(--theme-bg-gradient-light);
+  --theme-text-primary: var(--theme-text-primary-light);
+  --theme-text-secondary: var(--theme-text-secondary-light);
+  --theme-border: var(--theme-border-light);
+  --theme-card-bg: var(--theme-card-bg-light);
+  --theme-hover: var(--theme-hover-light);
+  
+  /* Update base colors for components */
+  --primary: #475569;
+  --secondary: #78716c;
+  --accent: #F1F5F9;
+  --gradient-primary: #475569;
+  --gradient-secondary: #78716c;
+  --gradient-tertiary: #EA580C;
+  --gradient-quaternary: #F1F5F9;
+  
+  /* Enhanced icon colors for this theme */
+  --icon-primary: #475569;
+  --icon-secondary: #78716c;
+  --icon-tertiary: #EA580C;
+  --icon-quaternary: #6366F1;
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.145 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.145 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.985 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.396 0.141 25.723);
+  --destructive-foreground: oklch(0.637 0.237 25.331);
+  --border: oklch(0.269 0 0);
+  --input: oklch(0.269 0 0);
+  --ring: oklch(0.439 0 0);
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(0.269 0 0);
+  --sidebar-ring: oklch(0.439 0 0);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-switch-background: var(--switch-background);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+/**
+ * Base typography. This is not applied to elements which have an ancestor with a Tailwind text class.
+ */
+@layer base {
+  :where(:not(:has([class*=" text-"]), :not(:has([class^="text-"])))) {
+    h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: var(--text-2xl);
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    h2 {
+      font-family: 'Poppins', sans-serif;
+      font-size: var(--text-xl);
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    h3 {
+      font-family: 'Poppins', sans-serif;
+      font-size: var(--text-lg);
+      font-weight: 500;
+      line-height: 1.5;
+    }
+
+    h4 {
+      font-family: 'Poppins', sans-serif;
+      font-size: var(--text-base);
+      font-weight: 500;
+      line-height: 1.5;
+    }
+
+    p {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-normal);
+      line-height: 1.5;
+    }
+
+    label {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    button {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    input {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-normal);
+      line-height: 1.5;
+    }
+  }
+}
+
+html {
+  font-size: var(--font-size);
+}
+
+/* Enhanced hover glow effects */
+.theme-hover:hover {
+  background-color: var(--theme-hover) !important;
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--theme-primary) 25%, transparent);
+  transform: translateY(-1px);
+  transition: all 250ms ease-out;
+}
+
+/* Glow effect for cards */
+.card-glow {
+  transition: all 250ms ease-out;
+}
+
+.card-glow:hover {
+  box-shadow: 
+    0 4px 12px color-mix(in srgb, var(--theme-primary) 20%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--theme-primary) 15%, transparent);
+  transform: translateY(-2px);
+}
+
+/* Glow effect for interactive elements */
+.interactive-glow {
+  transition: all 250ms ease-out;
+}
+
+.interactive-glow:hover {
+  box-shadow: 
+    0 2px 8px color-mix(in srgb, var(--theme-primary) 25%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--theme-primary) 20%, transparent);
+  transform: scale(1.02);
+}
+
+/* Button glow effects */
+.button-glow {
+  transition: all 250ms ease-out;
+}
+
+.button-glow:hover {
+  box-shadow: 
+    0 4px 16px color-mix(in srgb, var(--theme-primary) 30%, transparent),
+    0 0 0 1px var(--theme-primary);
+  transform: translateY(-1px);
+}
+
+/* Icon glow effects */
+.icon-glow {
+  transition: all 250ms ease-out;
+}
+
+.icon-glow:hover {
+  filter: drop-shadow(0 0 8px color-mix(in srgb, var(--theme-primary) 40%, transparent));
+  transform: scale(1.1);
+}
+
+/* Navigation glow effects */
+.nav-glow {
+  transition: all 250ms ease-out;
+}
+
+.nav-glow:hover {
+  box-shadow: 
+    0 2px 8px color-mix(in srgb, var(--theme-primary) 25%, transparent),
+    inset 0 0 0 1px color-mix(in srgb, var(--theme-primary) 20%, transparent);
+}
+
+/* Theme-aware button styles with enhanced contrast */
+.theme-button-ghost {
+  color: var(--theme-text-primary) !important;
+  transition: all 250ms ease-out;
+  background-color: transparent;
+}
+
+.theme-button-ghost:hover {
+  background-color: var(--theme-hover) !important;
+  color: var(--theme-text-primary) !important;
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--theme-primary) 20%, transparent);
+  transform: translateY(-1px);
+}
+
+.theme-button-active {
+  background-color: var(--theme-primary) !important;
+  color: white !important;
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--theme-primary) 40%, transparent);
+}
+
+.theme-button-active:hover {
+  background-color: var(--theme-primary) !important;
+  box-shadow: 0 4px 16px color-mix(in srgb, var(--theme-primary) 50%, transparent);
+  transform: translateY(-1px);
+}
+
+/* Dark mode toggle - switches between light and dark variables */
+.dark-mode {
+  --theme-bg: var(--theme-bg-dark) !important;
+  --theme-bg-gradient: var(--theme-bg-gradient-dark) !important;
+  --theme-text-primary: var(--theme-text-primary-dark) !important;
+  --theme-text-secondary: var(--theme-text-secondary-dark) !important;
+  --theme-border: var(--theme-border-dark) !important;
+  --theme-card-bg: var(--theme-card-bg-dark) !important;
+  --theme-hover: var(--theme-hover-dark) !important;
+  --icon-contrast: var(--icon-contrast-dark) !important;
+  --card-bg-elevated: rgba(55, 65, 81, 0.9) !important;
+  --tab-bg-inactive: rgba(55, 65, 81, 0.8) !important;
+  --tab-text-inactive: #cbd5e0 !important;
+}
+
+/* Ensure all theme classes properly support dark mode */
+.dark-mode.theme-default,
+.dark-mode.theme-mint,
+.dark-mode.theme-ocean,
+.dark-mode.theme-sakura,
+.dark-mode.theme-cloud {
+  --theme-bg: var(--theme-bg-dark) !important;
+  --theme-bg-gradient: var(--theme-bg-gradient-dark) !important;
+  --theme-text-primary: var(--theme-text-primary-dark) !important;
+  --theme-text-secondary: var(--theme-text-secondary-dark) !important;
+  --theme-border: var(--theme-border-dark) !important;
+  --theme-card-bg: var(--theme-card-bg-dark) !important;
+  --theme-hover: var(--theme-hover-dark) !important;
+}
+
+/* Fix dropdown menu item styles */
+.theme-dropdown-item {
+  color: var(--theme-text-primary) !important;
+}
+
+.theme-dropdown-item:hover {
+  background-color: var(--theme-hover) !important;
+}
+
+.theme-dropdown-item.active {
+  background-color: color-mix(in srgb, var(--theme-primary) 15%, transparent) !important;
+}
