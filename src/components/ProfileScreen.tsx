@@ -9,12 +9,50 @@ import { Avatar, AvatarFallback } from './ui/avatar';
 import { Switch } from './ui/switch';
 import { Badge } from './ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from './ui/dialog';
+import { Input } from './ui/input';
+import { Label } from './ui/label';
+
 
 export function ProfileScreen() {
-  const { profile, user, logout } = useAuth();
+  const { profile, user, logout, updateUserProfile, changeUserPassword } = useAuth();
   const { isDarkMode, toggleDarkMode } = useTheme();
   const [notifications, setNotifications] = useState(true);
   const [anonymousMode, setAnonymousMode] = useState(false);
+  const [editName, setEditName] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [isUpdating, setIsUpdating] = useState(false);
+
+  const handleEditProfile = async () => {
+    if (!editName.trim()) return;
+    setIsUpdating(true);
+    try {
+      await updateUserProfile(editName);
+      toast.success('Profile updated successfully!');
+    } catch (err: any) {
+      toast.error(err.message || 'Failed to update profile');
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
+  const handlePasswordChange = async () => {
+    if (!newPassword.trim()) return;
+    setIsUpdating(true);
+    try {
+      await changeUserPassword(newPassword);
+      toast.success('Password updated successfully!');
+      setNewPassword('');
+    } catch (err: any) {
+      if (err.message.includes('requires-recent-login')) {
+        toast.error('For security reasons, please log out and log back in to change your password.');
+      } else {
+        toast.error(err.message || 'Failed to update password');
+      }
+    } finally {
+      setIsUpdating(false);
+    }
+  };
 
   const email = profile?.email || user?.email || 'Anonymous';
 
@@ -475,40 +513,107 @@ export function ProfileScreen() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <Button
-                  variant="outline"
-                  onClick={() => toast.info('Edit Profile feature is coming soon!')}
-                  className="w-full justify-start transition-colors duration-300 hover:bg-opacity-10"
-                  style={{
-                    borderColor: 'var(--theme-border)',
-                    color: 'var(--theme-text-primary)',
-                    backgroundColor: 'var(--card-bg-elevated)',
-                    '--tw-bg-opacity': '0.5'
-                  }}
-                >
-                  <User
-                    className="w-4 h-4 mr-2"
-                    style={{ color: 'var(--icon-primary)' }}
-                  />
-                  Edit Profile Information
-                </Button>
-                <Button
-                  variant="outline"
-                  onClick={() => toast.info('Advanced Settings are coming soon!')}
-                  className="w-full justify-start transition-colors duration-300 hover:bg-opacity-10"
-                  style={{
-                    borderColor: 'var(--theme-border)',
-                    color: 'var(--theme-text-primary)',
-                    backgroundColor: 'var(--card-bg-elevated)',
-                    '--tw-bg-opacity': '0.5'
-                  }}
-                >
-                  <Settings
-                    className="w-4 h-4 mr-2"
-                    style={{ color: 'var(--icon-secondary)' }}
-                  />
-                  Advanced Settings
-                </Button>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className="w-full justify-start transition-colors duration-300 hover:bg-opacity-10"
+                      onClick={() => setEditName(displayName)}
+                      style={{
+                        borderColor: 'var(--theme-border)',
+                        color: 'var(--theme-text-primary)',
+                        backgroundColor: 'var(--card-bg-elevated)',
+                        '--tw-bg-opacity': '0.5'
+                      }}
+                    >
+                      <User
+                        className="w-4 h-4 mr-2"
+                        style={{ color: 'var(--icon-primary)' }}
+                      />
+                      Edit Profile Information
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-[425px]" style={{ backgroundColor: 'var(--theme-bg)', borderColor: 'var(--theme-border)' }}>
+                    <DialogHeader>
+                      <DialogTitle style={{ color: 'var(--theme-text-primary)' }}>Edit Profile</DialogTitle>
+                      <DialogDescription style={{ color: 'var(--theme-text-secondary)' }}>
+                        Make changes to your profile here. Click save when you're done.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="grid gap-4 py-4">
+                      <div className="grid gap-2">
+                        <Label htmlFor="name" style={{ color: 'var(--theme-text-primary)' }}>Display Name</Label>
+                        <Input
+                          id="name"
+                          value={editName}
+                          onChange={(e) => setEditName(e.target.value)}
+                          style={{ backgroundColor: 'var(--theme-card-bg)', color: 'var(--theme-text-primary)', borderColor: 'var(--theme-border)' }}
+                        />
+                      </div>
+                    </div>
+                    <DialogFooter>
+                      <DialogClose asChild>
+                        <Button type="button" variant="outline" style={{ borderColor: 'var(--theme-border)', color: 'var(--theme-text-primary)' }}>Cancel</Button>
+                      </DialogClose>
+                      <DialogClose asChild>
+                        <Button type="submit" onClick={handleEditProfile} disabled={isUpdating} style={{ backgroundColor: 'var(--theme-primary)', color: 'white' }}>
+                          Save changes
+                        </Button>
+                      </DialogClose>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
+
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className="w-full justify-start transition-colors duration-300 hover:bg-opacity-10"
+                      style={{
+                        borderColor: 'var(--theme-border)',
+                        color: 'var(--theme-text-primary)',
+                        backgroundColor: 'var(--card-bg-elevated)',
+                        '--tw-bg-opacity': '0.5'
+                      }}
+                    >
+                      <Settings
+                        className="w-4 h-4 mr-2"
+                        style={{ color: 'var(--icon-secondary)' }}
+                      />
+                      Advanced Settings
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-[425px]" style={{ backgroundColor: 'var(--theme-bg)', borderColor: 'var(--theme-border)' }}>
+                    <DialogHeader>
+                      <DialogTitle style={{ color: 'var(--theme-text-primary)' }}>Advanced Settings</DialogTitle>
+                      <DialogDescription style={{ color: 'var(--theme-text-secondary)' }}>
+                        Change your account password.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="grid gap-4 py-4">
+                      <div className="grid gap-2">
+                        <Label htmlFor="password" style={{ color: 'var(--theme-text-primary)' }}>New Password</Label>
+                        <Input
+                          id="password"
+                          type="password"
+                          value={newPassword}
+                          onChange={(e) => setNewPassword(e.target.value)}
+                          style={{ backgroundColor: 'var(--theme-card-bg)', color: 'var(--theme-text-primary)', borderColor: 'var(--theme-border)' }}
+                        />
+                      </div>
+                    </div>
+                    <DialogFooter>
+                      <DialogClose asChild>
+                        <Button type="button" variant="outline" style={{ borderColor: 'var(--theme-border)', color: 'var(--theme-text-primary)' }}>Cancel</Button>
+                      </DialogClose>
+                      <DialogClose asChild>
+                        <Button type="submit" onClick={handlePasswordChange} disabled={isUpdating || newPassword.length < 6} style={{ backgroundColor: 'var(--theme-primary)', color: 'white' }}>
+                          Update Password
+                        </Button>
+                      </DialogClose>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
                 <Button
                   variant="outline"
                   onClick={logout}

@@ -3,11 +3,12 @@ import {
   signInWithEmailAndPassword, 
   createUserWithEmailAndPassword, 
   updateProfile,
+  updatePassword,
   onAuthStateChanged, 
   signOut,
   User as FirebaseUser
 } from 'firebase/auth';
-import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { doc, setDoc, getDoc, updateDoc } from 'firebase/firestore';
 import { auth, db } from '../firebase';
 
 export interface UserProfile {
@@ -85,6 +86,33 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  const updateUserProfile = async (name: string) => {
+    if (!user) throw new Error("No user logged in");
+    try {
+      await updateProfile(user, { displayName: name });
+      
+      try {
+        const userRef = doc(db, 'users', user.uid);
+        await updateDoc(userRef, { displayName: name });
+      } catch (dbErr) {
+        console.warn("Could not update Firestore (check rules), but auth update succeeded.", dbErr);
+      }
+      
+      setProfile(prev => prev ? { ...prev, displayName: name } : null);
+    } catch (err: any) {
+      throw err;
+    }
+  };
+
+  const changeUserPassword = async (newPassword: string) => {
+    if (!user) throw new Error("No user logged in");
+    try {
+      await updatePassword(user, newPassword);
+    } catch (err: any) {
+      throw err;
+    }
+  };
+
   const logout = async () => {
     try {
       await signOut(auth);
@@ -98,7 +126,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, profile, loading, error, login, register, logout, bypassLogin }}>
+    <AuthContext.Provider value={{ user, profile, loading, error, login, register, logout, bypassLogin, updateUserProfile, changeUserPassword }}>
       {children}
     </AuthContext.Provider>
   );
