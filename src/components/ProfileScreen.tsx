@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { User, Settings, Bell, Shield, Heart, Calendar, MessageCircle, BookOpen, Moon, Sun, LogOut } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
+import { useTheme } from './ThemeContext';
+import { toast } from 'sonner';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Avatar, AvatarFallback } from './ui/avatar';
@@ -10,7 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 
 export function ProfileScreen() {
   const { profile, user, logout } = useAuth();
-  const [darkMode, setDarkMode] = useState(false);
+  const { isDarkMode, toggleDarkMode } = useTheme();
   const [notifications, setNotifications] = useState(true);
   const [anonymousMode, setAnonymousMode] = useState(false);
 
@@ -427,7 +429,7 @@ export function ProfileScreen() {
 
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-3">
-                    {darkMode ?
+                    {isDarkMode ?
                       <Moon
                         className="w-5 h-5 transition-colors duration-300"
                         style={{ color: 'var(--icon-tertiary)' }}
@@ -453,8 +455,8 @@ export function ProfileScreen() {
                     </div>
                   </div>
                   <Switch
-                    checked={darkMode}
-                    onCheckedChange={setDarkMode}
+                    checked={isDarkMode}
+                    onCheckedChange={toggleDarkMode}
                   />
                 </div>
               </CardContent>
@@ -475,6 +477,7 @@ export function ProfileScreen() {
               <CardContent className="space-y-4">
                 <Button
                   variant="outline"
+                  onClick={() => toast.info('Edit Profile feature is coming soon!')}
                   className="w-full justify-start transition-colors duration-300 hover:bg-opacity-10"
                   style={{
                     borderColor: 'var(--theme-border)',
@@ -491,6 +494,7 @@ export function ProfileScreen() {
                 </Button>
                 <Button
                   variant="outline"
+                  onClick={() => toast.info('Advanced Settings are coming soon!')}
                   className="w-full justify-start transition-colors duration-300 hover:bg-opacity-10"
                   style={{
                     borderColor: 'var(--theme-border)',
