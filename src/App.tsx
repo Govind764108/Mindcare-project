@@ -9,6 +9,7 @@ import { BookingSystem } from './components/BookingSystem';
 import { ProfileScreen } from './components/ProfileScreen';
 import { AuthScreen } from './components/AuthScreen';
 import { useAuth } from './hooks/useAuth';
+import { Toaster } from 'sonner';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('home');
@@ -48,6 +49,7 @@ export default function App() {
         <main className="pt-0">
           {renderActiveScreen()}
         </main>
+        <Toaster />
       </div>
     </ThemeProvider>
   );
