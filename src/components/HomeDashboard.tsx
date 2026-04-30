@@ -14,7 +14,7 @@ interface HomeDashboardProps {
 /** Maps mood class name to a friendly label + emoji for the badge */
 const MOOD_BADGE: Record<string, { label: string; emoji: string }> = {
   'mood-struggling': { label: 'Struggling', emoji: '😟' },
-  'mood-notgood':    { label: 'Not so good', emoji: '😕' },
+  'mood-notgood':    { label: 'Not so Good', emoji: '😕' },
   'mood-okay':       { label: 'Okay', emoji: '😐' },
   'mood-good':       { label: 'Good', emoji: '🙂' },
   'mood-great':      { label: 'Great', emoji: '😊' },

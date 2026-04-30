@@ -394,30 +394,30 @@ html {
     --theme-accent var(--mood-transition);
 }
 
-/* 😟 Struggling (0–19): Deep Indigo — calm, steady, safe */
+/* 😟 Struggling (0–19): Lavender #C3B1E1 — soft & calming for sad users */
 .mood-struggling {
-  --theme-primary: #4338CA;
-  --theme-secondary: #6366F1;
-  --theme-tertiary: #818CF8;
-  --theme-accent: #E0E7FF;
-  --primary: #4338CA;
-  --gradient-primary: #4338CA;
-  --gradient-secondary: #6366F1;
-  --gradient-tertiary: #818CF8;
-  --icon-primary: #4338CA;
-  --icon-secondary: #6366F1;
-  --icon-tertiary: #818CF8;
-  --theme-bg-gradient-light: linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 50%, #F5F3FF 100%);
-  --theme-bg-gradient-dark: linear-gradient(135deg, #0c0c1e 0%, #12122e 50%, #0a0a1a 100%);
+  --theme-primary: #C3B1E1;
+  --theme-secondary: #A891D4;
+  --theme-tertiary: #DDD0EE;
+  --theme-accent: #F0EBF8;
+  --primary: #C3B1E1;
+  --gradient-primary: #C3B1E1;
+  --gradient-secondary: #A891D4;
+  --gradient-tertiary: #DDD0EE;
+  --icon-primary: #9B7DC8;
+  --icon-secondary: #A891D4;
+  --icon-tertiary: #C3B1E1;
+  --theme-bg-gradient-light: linear-gradient(135deg, #FAF7FF 0%, #EEE6F8 50%, #F5F0FC 100%);
+  --theme-bg-gradient-dark: linear-gradient(135deg, #1a1220 0%, #241a30 50%, #160f1c 100%);
   --theme-bg-gradient: var(--theme-bg-gradient-light);
-  --theme-border-light: rgba(67, 56, 202, 0.15);
-  --theme-hover-light: rgba(67, 56, 202, 0.08);
+  --theme-border-light: rgba(195, 177, 225, 0.30);
+  --theme-hover-light: rgba(195, 177, 225, 0.15);
   --theme-border: var(--theme-border-light);
   --theme-hover: var(--theme-hover-light);
-  --ring: #4338CA;
+  --ring: #C3B1E1;
 }
 
-/* 😕 Not so Good (20–39): Muted Violet — gentle, soothing */
+/* 😕 Not so Good (20–39): Electric Violet — vibrant to lift the spirit */
 .mood-notgood {
   --theme-primary: #7C3AED;
   --theme-secondary: #A78BFA;
@@ -510,7 +510,7 @@ html {
 }
 
 /* Dark mode support for mood classes */
-.dark-mode.mood-struggling { --theme-bg-gradient: var(--theme-bg-gradient-dark) !important; --theme-border: rgba(67, 56, 202, 0.22) !important; --theme-hover: rgba(67, 56, 202, 0.12) !important; }
+.dark-mode.mood-struggling { --theme-bg-gradient: var(--theme-bg-gradient-dark) !important; --theme-border: rgba(195, 177, 225, 0.30) !important; --theme-hover: rgba(195, 177, 225, 0.15) !important; }
 .dark-mode.mood-notgood    { --theme-bg-gradient: var(--theme-bg-gradient-dark) !important; --theme-border: rgba(124, 58, 237, 0.22) !important; --theme-hover: rgba(124, 58, 237, 0.12) !important; }
 .dark-mode.mood-okay       { --theme-bg-gradient: var(--theme-bg-gradient-dark) !important; --theme-border: rgba(13, 148, 136, 0.22) !important; --theme-hover: rgba(13, 148, 136, 0.12) !important; }
 .dark-mode.mood-good       { --theme-bg-gradient: var(--theme-bg-gradient-dark) !important; --theme-border: rgba(5, 150, 105, 0.22) !important; --theme-hover: rgba(5, 150, 105, 0.12) !important; }
