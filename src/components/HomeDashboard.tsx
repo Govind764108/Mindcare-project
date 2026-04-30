@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { MessageCircle, Calendar, Headphones, Users, ChevronLeft, ChevronRight, Lightbulb, Camera } from 'lucide-react';
 import { useMoodDetection } from '../hooks/useMoodDetection';
+import { useTheme, getMoodClass } from './ThemeContext';
 import { Card, CardContent } from './ui/card';
 import { Button } from './ui/button';
 import { Slider } from './ui/slider';
@@ -10,12 +11,29 @@ interface HomeDashboardProps {
   onTabChange: (tab: string) => void;
 }
 
+/** Maps mood class name to a friendly label + emoji for the badge */
+const MOOD_BADGE: Record<string, { label: string; emoji: string }> = {
+  'mood-struggling': { label: 'Struggling', emoji: '😟' },
+  'mood-notgood':    { label: 'Not so good', emoji: '😕' },
+  'mood-okay':       { label: 'Okay', emoji: '😐' },
+  'mood-good':       { label: 'Good', emoji: '🙂' },
+  'mood-great':      { label: 'Great', emoji: '😊' },
+};
+
 export function HomeDashboard({ onTabChange }: HomeDashboardProps) {
-  const [moodValue, setMoodValue] = useState([50]);
+  // ── Use global mood from ThemeContext so entire app re-colours ────────────
+  const { moodValue: globalMood, setMoodValue: setGlobalMood } = useTheme();
+  // Keep a Slider-compatible array wrapper locally
+  const moodValue = [globalMood];
+  const setMoodValue = (val: number[]) => setGlobalMood(val[0]);
+
   const [currentTip, setCurrentTip] = useState(0);
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const { mood, isDetecting, setIsDetecting, captureAndDetect } = useMoodDetection(videoRef);
+
+  const activeMoodClass = getMoodClass(globalMood);
+  const moodBadge = MOOD_BADGE[activeMoodClass];
 
   useEffect(() => {
     let interval: any;
@@ -43,7 +61,7 @@ export function HomeDashboard({ onTabChange }: HomeDashboardProps) {
 
   useEffect(() => {
     if (mood) {
-      // Map detected mood to slider value
+      // Map detected mood to global slider value
       const moodMap: Record<string, number> = {
         'happy': 85,
         'neutral': 50,
@@ -52,7 +70,7 @@ export function HomeDashboard({ onTabChange }: HomeDashboardProps) {
         'angry': 10
       };
       if (moodMap[mood] !== undefined) {
-        setMoodValue([moodMap[mood]]);
+        setGlobalMood(moodMap[mood]);
       }
     }
   }, [mood]);
@@ -293,24 +311,46 @@ export function HomeDashboard({ onTabChange }: HomeDashboardProps) {
 
             {/* Mood Tracker */}
             <Card
-              className="max-w-md mx-auto backdrop-blur-sm border-0 shadow-lg card-glow transition-colors duration-300"
+              className="max-w-md mx-auto backdrop-blur-sm border-0 shadow-xl card-glow"
               style={{
-                background: `linear-gradient(135deg, color-mix(in srgb, var(--theme-bg) 70%, transparent), color-mix(in srgb, var(--theme-accent) 20%, transparent))`
+                background: `linear-gradient(135deg, color-mix(in srgb, var(--theme-bg) 70%, transparent), color-mix(in srgb, var(--theme-accent) 30%, transparent))`,
+                transition: 'background 700ms cubic-bezier(0.4,0,0.2,1), box-shadow 700ms ease'
               }}
             >
               <CardContent className="p-6 space-y-4">
+                {/* Mood palette indicator badge */}
+                <div className="flex justify-center">
+                  <span
+                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold tracking-wide"
+                    style={{
+                      backgroundColor: 'color-mix(in srgb, var(--theme-primary) 15%, transparent)',
+                      color: 'var(--theme-primary)',
+                      border: '1px solid color-mix(in srgb, var(--theme-primary) 30%, transparent)',
+                      transition: 'all 700ms ease'
+                    }}
+                  >
+                    <span>{moodBadge.emoji}</span>
+                    <span>UI Palette: {moodBadge.label}</span>
+                    <span
+                      className="w-2 h-2 rounded-full animate-pulse"
+                      style={{ backgroundColor: 'var(--theme-primary)' }}
+                    />
+                  </span>
+                </div>
+
                 <div className="text-center">
                   <div
-                    className="text-6xl mb-2 p-3 rounded-2xl inline-block transition-all duration-300"
+                    className="text-6xl mb-2 p-3 rounded-2xl inline-block"
                     style={{
-                      background: `linear-gradient(135deg, color-mix(in srgb, var(--theme-primary) 10%, transparent), color-mix(in srgb, var(--theme-tertiary) 15%, transparent))`
+                      background: `linear-gradient(135deg, color-mix(in srgb, var(--theme-primary) 10%, transparent), color-mix(in srgb, var(--theme-tertiary) 15%, transparent))`,
+                      transition: 'background 700ms ease'
                     }}
                   >
                     {getMoodEmoji(moodValue[0])}
                   </div>
                   <p
-                    className="text-lg font-medium transition-colors duration-300"
-                    style={{ color: 'var(--theme-primary)' }}
+                    className="text-lg font-medium"
+                    style={{ color: 'var(--theme-primary)', transition: 'color 700ms ease' }}
                   >
                     Feeling {getMoodText(moodValue[0])}
                   </p>

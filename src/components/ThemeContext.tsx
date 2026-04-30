@@ -1,12 +1,33 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 export type ThemeMode = 'default' | 'mint' | 'ocean' | 'sakura' | 'cloud';
+export type MoodClass = 'mood-struggling' | 'mood-notgood' | 'mood-okay' | 'mood-good' | 'mood-great';
+
+const ALL_MOOD_CLASSES: MoodClass[] = [
+  'mood-struggling',
+  'mood-notgood',
+  'mood-okay',
+  'mood-good',
+  'mood-great',
+];
+
+/** Maps a 0–100 slider value to a CSS mood class */
+export function getMoodClass(value: number): MoodClass {
+  if (value < 20) return 'mood-struggling';
+  if (value < 40) return 'mood-notgood';
+  if (value < 60) return 'mood-okay';
+  if (value < 80) return 'mood-good';
+  return 'mood-great';
+}
 
 interface ThemeContextType {
   theme: ThemeMode;
   setTheme: (theme: ThemeMode) => void;
   isDarkMode: boolean;
   toggleDarkMode: () => void;
+  /** Global mood slider value (0–100). Drives the whole-app color palette. */
+  moodValue: number;
+  setMoodValue: (value: number) => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -26,33 +47,31 @@ interface ThemeProviderProps {
 export function ThemeProvider({ children }: ThemeProviderProps) {
   const [theme, setTheme] = useState<ThemeMode>('default');
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [moodValue, setMoodValue] = useState(50); // default: Okay
 
+  // ── Load preferences from localStorage on mount ──────────────────────────
   useEffect(() => {
-    // Load theme and dark mode preference from localStorage on mount
     const savedTheme = localStorage.getItem('mindcare-theme') as ThemeMode;
     const savedDarkMode = localStorage.getItem('mindcare-dark-mode') === 'true';
-    
+    const savedMood = localStorage.getItem('mindcare-mood');
+
     if (savedTheme && ['default', 'mint', 'ocean', 'sakura', 'cloud'].includes(savedTheme)) {
       setTheme(savedTheme);
     }
     setIsDarkMode(savedDarkMode);
+    if (savedMood !== null) setMoodValue(Number(savedMood));
   }, []);
 
+  // ── Apply colour-theme class ──────────────────────────────────────────────
   useEffect(() => {
-    // Save theme to localStorage and apply to document
     localStorage.setItem('mindcare-theme', theme);
-    
-    // Remove all theme classes
     document.documentElement.classList.remove('theme-default', 'theme-mint', 'theme-ocean', 'theme-sakura', 'theme-cloud');
-    
-    // Add current theme class
     document.documentElement.classList.add(`theme-${theme}`);
   }, [theme]);
 
+  // ── Apply dark-mode class ─────────────────────────────────────────────────
   useEffect(() => {
-    // Save dark mode preference and apply to document
     localStorage.setItem('mindcare-dark-mode', isDarkMode.toString());
-    
     if (isDarkMode) {
       document.documentElement.classList.add('dark-mode');
     } else {
@@ -60,12 +79,19 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     }
   }, [isDarkMode]);
 
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-  };
+  // ── Apply mood class globally to <html> ───────────────────────────────────
+  useEffect(() => {
+    localStorage.setItem('mindcare-mood', String(moodValue));
+    const moodClass = getMoodClass(moodValue);
+    // Remove all existing mood classes, then add the correct one
+    document.documentElement.classList.remove(...ALL_MOOD_CLASSES);
+    document.documentElement.classList.add(moodClass);
+  }, [moodValue]);
+
+  const toggleDarkMode = () => setIsDarkMode(prev => !prev);
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme, isDarkMode, toggleDarkMode }}>
+    <ThemeContext.Provider value={{ theme, setTheme, isDarkMode, toggleDarkMode, moodValue, setMoodValue }}>
       {children}
     </ThemeContext.Provider>
   );

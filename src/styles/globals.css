@@ -364,6 +364,158 @@
   --icon-quaternary: #6366F1;
 }
 
+/* ─────────────────────────────────────────────────────────────
+   MOOD-DRIVEN DYNAMIC PALETTES
+   These classes are applied to <html> based on the mood slider (0–100).
+   They override theme-primary and related vars so the entire UI shifts.
+   ───────────────────────────────────────────────────────────── */
+
+/* Smooth animated transitions for mood color shifts */
+:root {
+  --mood-transition: 700ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html {
+  transition:
+    background-color var(--mood-transition),
+    color var(--mood-transition);
+}
+
+/* Helper: all CSS vars that participate in mood transitions */
+.mood-struggling,
+.mood-notgood,
+.mood-okay,
+.mood-good,
+.mood-great {
+  transition:
+    --theme-primary var(--mood-transition),
+    --theme-secondary var(--mood-transition),
+    --theme-tertiary var(--mood-transition),
+    --theme-accent var(--mood-transition);
+}
+
+/* 😟 Struggling (0–19): Deep Indigo — calm, steady, safe */
+.mood-struggling {
+  --theme-primary: #4338CA;
+  --theme-secondary: #6366F1;
+  --theme-tertiary: #818CF8;
+  --theme-accent: #E0E7FF;
+  --primary: #4338CA;
+  --gradient-primary: #4338CA;
+  --gradient-secondary: #6366F1;
+  --gradient-tertiary: #818CF8;
+  --icon-primary: #4338CA;
+  --icon-secondary: #6366F1;
+  --icon-tertiary: #818CF8;
+  --theme-bg-gradient-light: linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 50%, #F5F3FF 100%);
+  --theme-bg-gradient-dark: linear-gradient(135deg, #0c0c1e 0%, #12122e 50%, #0a0a1a 100%);
+  --theme-bg-gradient: var(--theme-bg-gradient-light);
+  --theme-border-light: rgba(67, 56, 202, 0.15);
+  --theme-hover-light: rgba(67, 56, 202, 0.08);
+  --theme-border: var(--theme-border-light);
+  --theme-hover: var(--theme-hover-light);
+  --ring: #4338CA;
+}
+
+/* 😕 Not so Good (20–39): Muted Violet — gentle, soothing */
+.mood-notgood {
+  --theme-primary: #7C3AED;
+  --theme-secondary: #A78BFA;
+  --theme-tertiary: #C4B5FD;
+  --theme-accent: #EDE9FE;
+  --primary: #7C3AED;
+  --gradient-primary: #7C3AED;
+  --gradient-secondary: #A78BFA;
+  --gradient-tertiary: #C4B5FD;
+  --icon-primary: #7C3AED;
+  --icon-secondary: #A78BFA;
+  --icon-tertiary: #C4B5FD;
+  --theme-bg-gradient-light: linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 50%, #FAF5FF 100%);
+  --theme-bg-gradient-dark: linear-gradient(135deg, #130c20 0%, #1e1030 50%, #0e0818 100%);
+  --theme-bg-gradient: var(--theme-bg-gradient-light);
+  --theme-border-light: rgba(124, 58, 237, 0.15);
+  --theme-hover-light: rgba(124, 58, 237, 0.08);
+  --theme-border: var(--theme-border-light);
+  --theme-hover: var(--theme-hover-light);
+  --ring: #7C3AED;
+}
+
+/* 😐 Okay (40–59): Teal — neutral, balanced */
+.mood-okay {
+  --theme-primary: #0D9488;
+  --theme-secondary: #14B8A6;
+  --theme-tertiary: #5EEAD4;
+  --theme-accent: #CCFBF1;
+  --primary: #0D9488;
+  --gradient-primary: #0D9488;
+  --gradient-secondary: #14B8A6;
+  --gradient-tertiary: #5EEAD4;
+  --icon-primary: #0D9488;
+  --icon-secondary: #14B8A6;
+  --icon-tertiary: #5EEAD4;
+  --theme-bg-gradient-light: linear-gradient(135deg, #F0FDFA 0%, #CCFBF1 50%, #F0FDF4 100%);
+  --theme-bg-gradient-dark: linear-gradient(135deg, #071612 0%, #0d1f1d 50%, #061210 100%);
+  --theme-bg-gradient: var(--theme-bg-gradient-light);
+  --theme-border-light: rgba(13, 148, 136, 0.15);
+  --theme-hover-light: rgba(13, 148, 136, 0.08);
+  --theme-border: var(--theme-border-light);
+  --theme-hover: var(--theme-hover-light);
+  --ring: #0D9488;
+}
+
+/* 🙂 Good (60–79): Emerald Green — hopeful, uplifting */
+.mood-good {
+  --theme-primary: #059669;
+  --theme-secondary: #10B981;
+  --theme-tertiary: #6EE7B7;
+  --theme-accent: #D1FAE5;
+  --primary: #059669;
+  --gradient-primary: #059669;
+  --gradient-secondary: #10B981;
+  --gradient-tertiary: #6EE7B7;
+  --icon-primary: #059669;
+  --icon-secondary: #10B981;
+  --icon-tertiary: #6EE7B7;
+  --theme-bg-gradient-light: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 50%, #F0FDF4 100%);
+  --theme-bg-gradient-dark: linear-gradient(135deg, #051a0e 0%, #0a2a18 50%, #041208 100%);
+  --theme-bg-gradient: var(--theme-bg-gradient-light);
+  --theme-border-light: rgba(5, 150, 105, 0.15);
+  --theme-hover-light: rgba(5, 150, 105, 0.08);
+  --theme-border: var(--theme-border-light);
+  --theme-hover: var(--theme-hover-light);
+  --ring: #059669;
+}
+
+/* 😊 Great (80–100): Vibrant Coral-Orange — energetic, joyful */
+.mood-great {
+  --theme-primary: #EA580C;
+  --theme-secondary: #F97316;
+  --theme-tertiary: #FCD34D;
+  --theme-accent: #FEF3C7;
+  --primary: #EA580C;
+  --gradient-primary: #EA580C;
+  --gradient-secondary: #F97316;
+  --gradient-tertiary: #FCD34D;
+  --icon-primary: #EA580C;
+  --icon-secondary: #F97316;
+  --icon-tertiary: #FCD34D;
+  --theme-bg-gradient-light: linear-gradient(135deg, #FFF7ED 0%, #FEF3C7 50%, #FFFBEB 100%);
+  --theme-bg-gradient-dark: linear-gradient(135deg, #1c0d04 0%, #2d1508 50%, #160a02 100%);
+  --theme-bg-gradient: var(--theme-bg-gradient-light);
+  --theme-border-light: rgba(234, 88, 12, 0.15);
+  --theme-hover-light: rgba(234, 88, 12, 0.08);
+  --theme-border: var(--theme-border-light);
+  --theme-hover: var(--theme-hover-light);
+  --ring: #EA580C;
+}
+
+/* Dark mode support for mood classes */
+.dark-mode.mood-struggling { --theme-bg-gradient: var(--theme-bg-gradient-dark) !important; --theme-border: rgba(67, 56, 202, 0.22) !important; --theme-hover: rgba(67, 56, 202, 0.12) !important; }
+.dark-mode.mood-notgood    { --theme-bg-gradient: var(--theme-bg-gradient-dark) !important; --theme-border: rgba(124, 58, 237, 0.22) !important; --theme-hover: rgba(124, 58, 237, 0.12) !important; }
+.dark-mode.mood-okay       { --theme-bg-gradient: var(--theme-bg-gradient-dark) !important; --theme-border: rgba(13, 148, 136, 0.22) !important; --theme-hover: rgba(13, 148, 136, 0.12) !important; }
+.dark-mode.mood-good       { --theme-bg-gradient: var(--theme-bg-gradient-dark) !important; --theme-border: rgba(5, 150, 105, 0.22) !important; --theme-hover: rgba(5, 150, 105, 0.12) !important; }
+.dark-mode.mood-great      { --theme-bg-gradient: var(--theme-bg-gradient-dark) !important; --theme-border: rgba(234, 88, 12, 0.22) !important; --theme-hover: rgba(234, 88, 12, 0.12) !important; }
+
 .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
